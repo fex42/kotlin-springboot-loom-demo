@@ -31,7 +31,7 @@ For the samples to run, we need to talk to a remote server.
 
 ### All demo examples
 #### Blocking
-- Disable Virtual Threads: `spring.threads.virtual.enabled=true`
+- Disable Virtual Threads: `spring.threads.virtual.enabled=false`
 ```
 curl  -X POST -H "Content-Type: application/json" -d '{"id":null,"userName":"Jack","email":"Rabbit@hi.nl","avatarUrl":null}' http://localhost:8085/blocking/users\?delay\=200 | jq
 curltime  -X POST -H "Content-Type: application/json" -d '{"id":null,"userName":"Jack","email":"Rabbit@hi.nl","avatarUrl":null}' http://localhost:8085/blocking/users\?delay\=200
