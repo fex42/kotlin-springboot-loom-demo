@@ -51,7 +51,7 @@ class CoroutineUserController(
     suspend fun storeUser(@RequestBody user: User, @RequestParam(required = false) delay:Long? = null): UserDto? = coroutineScope{
         val emailVerified = async { enrollmentService.verifyEmail(user.email,  delay) }
         val avatarUrl = async { avatarService.randomAvatar(delay).url }
-        userRepository.save(user.copy(id = null,avatarUrl = avatarUrl.await(), emailVerified = emailVerified.await())).toDto()
+        userRepository.save(user.copy(id = null, avatarUrl = avatarUrl.await(), emailVerified = emailVerified.await())).toDto()
     }
 
 
