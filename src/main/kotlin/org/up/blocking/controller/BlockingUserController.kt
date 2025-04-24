@@ -41,7 +41,7 @@ class BlockingUserController(
      *
      * Instead, always use Coroutine enabled endpoints starting with the suspend keyword.
      */
-    @PostMapping("/blocking/users", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/blockingvt/users", consumes = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
     @Transactional
     fun storeUser_Do_Not_Use_Run_Blocking(@RequestBody user: UserJpa, @RequestParam(required = false) delay: Long? = null): UserDto {
@@ -69,6 +69,14 @@ class BlockingUserController(
 
 
 
+    @PostMapping("/blocking/users", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @ResponseBody
+    @Transactional
+    fun storeUser(@RequestBody user: UserJpa, @RequestParam(required = false) delay: Long? = null): UserDto {
+            val avatarUrl = blockingAvatarService.randomAvatar(delay).url
+            val emailVerified = blockingEnrollmentService.verifyEmail(user.email, delay)
+            return blockingUserDao.save(user.copy(avatarUrl = avatarUrl, emailVerified = emailVerified)).toDto()
+    }
 
 
 
@@ -77,7 +85,7 @@ class BlockingUserController(
     @ResponseBody
     @Transactional
     fun storeUser_(user: UserJpa, @RequestParam(required = false) delay: Long? = null): UserDto {
-        return storeUser_Do_Not_Use_Run_Blocking(user, delay)
+        return storeUser(user, delay)
     }
 
 

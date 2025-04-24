@@ -2,8 +2,6 @@ package org.up.coroutines.controller
 
 import jakarta.transaction.Transactional
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -136,7 +134,7 @@ class CoroutineUserController(
     }
 
 
-    private val channel = BroadcastChannel<UserAddedNotification>(Channel.CONFLATED)
+    private val channel = MutableSharedFlow<UserAddedNotification>(0, extraBufferCapacity=1)
 
 
 
@@ -149,7 +147,7 @@ class CoroutineUserController(
     @Scheduled(fixedRate = 1000)
     fun singlePoller() = runBlocking{
         userRepository.findById_GreaterThan(lastId.get()).toList().partition { it.emailVerified }.also {(verified, notVerified) ->
-            channel.send(UserAddedNotification(verified = verified.size, nonVerified = notVerified.size))
+            channel.emit(UserAddedNotification(verified = verified.size, nonVerified = notVerified.size))
             lastId.set((verified + notVerified).map { it.id ?: 0 }.max() ?: 0)
         }
     }
@@ -182,7 +180,7 @@ class CoroutineUserController(
             emit(user).also { latestId = user.id!! }
         }
         take()
-        channel.openSubscription().consumeAsFlow().collect {
+        channel.collect {
             take()
         }
     }
@@ -196,7 +194,7 @@ class CoroutineUserController(
             emit(user).also { lastId = user.id!! }
         }
         take()
-        channel.openSubscription().consumeAsFlow().filter { it.has(filterVerified) }.collect {
+        channel.filter { it.has(filterVerified) }.collect {
             take()
         }
     }

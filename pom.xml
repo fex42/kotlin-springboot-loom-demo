@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.4.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.up</groupId>
@@ -15,8 +15,8 @@
     <description>kotlin-springboot-loom-demo</description>
     <properties>
         <java.version>21</java.version>
-        <kotlin.version>1.9.22</kotlin.version>
-        <kotlinx.version>1.7.3</kotlinx.version>
+        <kotlin.version>2.1.20</kotlin.version>
+        <kotlinx.version>1.10.2</kotlinx.version>
         <r2dbc.version>1.0.0.RELEASE</r2dbc.version>
         <r2dbc-spi.version>1.0.0.RELEASE</r2dbc-spi.version>
         <h2-r2dbc.version>1.0.0.RELEASE</h2-r2dbc.version>
