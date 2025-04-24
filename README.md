@@ -47,8 +47,8 @@ baton -m POST -u http://localhost:8083/reactorj/users?delay=2000 -z users-reacti
 
 #### Coroutines
 ```
-curl  -X POST -H "Content-Type: application/json" -d '{"id":null,"userName":"Jack","email":"Rabbit@hi.nl","avatarUrl":null}' http://localhost:8085/users\?delay\=200 | jq
-curltime  -X POST -H "Content-Type: application/json" -d '{"id":null,"userName":"Jack","email":"Rabbit@hi.nl","avatarUrl":null}' http://localhost:8085/users\?delay\=200
+curl  -X POST -H "Content-Type: application/json" -d '{"id":null,"userName":"Jack","email":"Rabbit@hi.nl","avatarUrl":null}' http://localhost:8085/coroutines/users\?delay\=200 | jq
+curltime  -X POST -H "Content-Type: application/json" -d '{"id":null,"userName":"Jack","email":"Rabbit@hi.nl","avatarUrl":null}' http://localhost:8085/coroutines/users\?delay\=200
 baton -m POST -u http://localhost:8085/users?delay=2000 -z users-coroutines.csv  -c 100 -r 110
 ```
 
