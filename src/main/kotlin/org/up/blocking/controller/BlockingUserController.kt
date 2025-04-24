@@ -41,7 +41,7 @@ class BlockingUserController(
      *
      * Instead, always use Coroutine enabled endpoints starting with the suspend keyword.
      */
-    @PostMapping("/blockingvt/users", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/blocking/users", consumes = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
     @Transactional
     fun storeUser_Do_Not_Use_Run_Blocking(@RequestBody user: UserJpa, @RequestParam(required = false) delay: Long? = null): UserDto {
@@ -69,7 +69,7 @@ class BlockingUserController(
 
 
 
-    @PostMapping("/blocking/users", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/blockingx/users", consumes = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
     @Transactional
     fun storeUser(@RequestBody user: UserJpa, @RequestParam(required = false) delay: Long? = null): UserDto {

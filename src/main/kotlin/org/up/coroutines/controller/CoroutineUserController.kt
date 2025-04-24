@@ -148,7 +148,7 @@ class CoroutineUserController(
     fun singlePoller() = runBlocking{
         userRepository.findById_GreaterThan(lastId.get()).toList().partition { it.emailVerified }.also {(verified, notVerified) ->
             channel.emit(UserAddedNotification(verified = verified.size, nonVerified = notVerified.size))
-            lastId.set((verified + notVerified).map { it.id ?: 0 }.max() ?: 0)
+            lastId.set((verified + notVerified).maxOfOrNull { it.id ?: 0 } ?: 0)
         }
     }
 
