@@ -20,7 +20,7 @@
         <r2dbc.version>1.0.0.RELEASE</r2dbc.version>
         <r2dbc-spi.version>1.0.0.RELEASE</r2dbc-spi.version>
         <h2-r2dbc.version>1.0.0.RELEASE</h2-r2dbc.version>
-        <postgres-r2dbc.version>1.0.4.RELEASE</postgres-r2dbc.version>
+        <postgres-r2dbc.version>1.0.7.RELEASE</postgres-r2dbc.version>
     </properties>
     <dependencies>
         <dependency>
