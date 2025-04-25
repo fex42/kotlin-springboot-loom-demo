@@ -8,13 +8,9 @@ import org.up.blocking.model.UserJpa;
 import org.up.blocking.repository.BlockingAvatarService;
 import org.up.blocking.repository.BlockingEnrollmentService;
 import org.up.blocking.repository.BlockingUserDao;
-import org.up.coroutines.model.UserDto;
-import org.up.reactor.repository.UserDtoBuilder;
 
-import java.awt.*;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.StructuredTaskScope;
 
 @RestController
