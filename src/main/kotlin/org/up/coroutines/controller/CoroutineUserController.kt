@@ -3,6 +3,8 @@ package org.up.coroutines.controller
 import jakarta.transaction.Transactional
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.slf4j.MDCContext
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.codec.ServerSentEvent
@@ -19,6 +21,8 @@ import org.up.coroutines.repository.EnrollmentService
 import org.up.coroutines.repository.UserRepository
 import org.up.utils.VT
 import java.util.concurrent.atomic.AtomicLong
+
+val logger = LoggerFactory.getLogger(CoroutineUserController::class.java)
 
 @RestController
 class CoroutineUserController(
@@ -46,9 +50,10 @@ class CoroutineUserController(
     @PostMapping("/coroutines/users", consumes = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
     @Transactional
-    suspend fun storeUser(@RequestBody user: User, @RequestParam(required = false) delay:Long? = null): UserDto? = coroutineScope{
-        val emailVerified = async { enrollmentService.verifyEmail(user.email,  delay) }
-        val avatarUrl = async { avatarService.randomAvatar(delay).url }
+    suspend fun storeUser(@RequestBody user: User, @RequestParam(required = false) delay:Long? = null): UserDto? = coroutineScope {
+        logger.info("start storeUser")
+        val emailVerified = async(MDCContext()) { enrollmentService.verifyEmail(user.email,  delay).also { logger.info("verifyEmail") } }
+        val avatarUrl = async(MDCContext()) { avatarService.randomAvatar(delay).url.also { logger.info("randomAvatar") } }
         userRepository.save(user.copy(id = null, avatarUrl = avatarUrl.await(), emailVerified = emailVerified.await())).toDto()
     }
 
