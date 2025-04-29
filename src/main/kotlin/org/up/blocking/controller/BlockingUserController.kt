@@ -46,7 +46,7 @@ class BlockingUserController(
     @Transactional
     fun storeUser_Do_Not_Use_Run_Blocking(@RequestBody user: UserJpa, @RequestParam(required = false) delay: Long? = null): UserDto {
         logger.info("Start storeUser") //IMPORTANT: MDC will be logged here, but not in the async blocks
-        return runBlocking(Dispatchers.VT){
+        return runBlocking(Dispatchers.VT) {
             val avatarUrl = async{
                 //IMPORTANT: in here you don't have access to all ThreadLocal based attributed like: Spring's SecurityContext, MDC & Transaction,
                 //which might result to unexpected behaviour.
@@ -85,7 +85,7 @@ class BlockingUserController(
     @ResponseBody
     @Transactional
     fun storeUser_(user: UserJpa, @RequestParam(required = false) delay: Long? = null): UserDto {
-        return storeUser(user, delay)
+        return storeUser_Do_Not_Use_Run_Blocking(user, delay)
     }
 
 
