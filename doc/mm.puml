@@ -1,0 +1,47 @@
+@startmindmap
+# Abstraction Layers
+
+++ Hardware
++++ CPU
+++++ Cores
+
+++ OS
++++ Processes
+++++ Threads
+
+++ VM
++++ Threads
++++ Virtual Threads
+
+++ Kotlin
++++ Coroutines
+
+# Coroutines
+++ Scope
+++ Context
++++ Dispatcher (legt fest, auf welchen Threads die Coroutine läuft)
+++++ Main (UI-Thread für Android)
+++++ IO (Thread Pool für Blocking-IO)
+++++ Default (Standard-Thread für CPU intensive Aufgaben)
+++++ Unconfined (startet auf aktuellem Thread)
++++ Job-Hierarchy
+++ Structured Concurrency
++++ Error Handling
+++ Threads may vary
++++ ThreadLocal need to be mapped (i.e. MDC)
+
+
+# Channel
+++ (Non)BlockingQueue
++++ Producer
++++ Actor
+
+# Flow
+++ Cold Asynchronous Stream
+++ Buffering Flow
+++ Flow Sharing
++++ shareIn
++++ stateIn
+
+
+@endmindmap
